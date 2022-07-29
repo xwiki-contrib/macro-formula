@@ -23,16 +23,40 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>org.xwiki.platform</groupId>
-    <artifactId>xwiki-platform-core</artifactId>
-    <version>14.7-SNAPSHOT</version>
+    <groupId>org.xwiki.contrib</groupId>
+    <artifactId>parent-platform</artifactId>
+    <version>13.10</version>
   </parent>
-  <artifactId>xwiki-platform-formula</artifactId>
+  <groupId>org.xwiki.contrib.formula</groupId>
+  <artifactId>macro-formula</artifactId>
+  <version>14.7-SNAPSHOT</version>
   <packaging>pom</packaging>
-  <name>XWiki Platform - Formula - Parent POM</name>
+  <name>Macro Formula - Parent POM</name>
   <description>Support for mathematical formulae inside XWiki</description>
+  <url>https://extensions.xwiki.org/xwiki/bin/view/Extension/Formula%20Macro</url>
+  <properties>
+    <xwiki.release.jira.skip>false</xwiki.release.jira.skip>
+    <xwiki.issueManagement.jira.id>FORMULA</xwiki.issueManagement.jira.id>
+  </properties>
+  <scm>
+    <connection>scm:git:git://github.com/xwiki-contrib/macro-formula.git</connection>
+    <developerConnection>scm:git:git@github.com:xwiki-contrib/macro-formula.git</developerConnection>
+    <url>https://github.com/xwiki-contrib/macro-formula/tree/master</url>
+    <tag>HEAD</tag>
+  </scm>
+  <developers>
+    <developer>
+      <id>xwikidev</id>
+      <name>XWiki Development Team</name>
+    </developer>
+    <developer>
+      <id>vmassol</id>
+      <name>Vincent Massol</name>
+    </developer>
+  </developers>
   <modules>
-    <module>xwiki-platform-formula-renderer</module>
-    <module>xwiki-platform-formula-macro</module>
+    <!-- Sorted Alphabetically -->
+    <module>macro-formula-macro</module>
+    <module>macro-formula-renderer</module>
   </modules>
 </project>
