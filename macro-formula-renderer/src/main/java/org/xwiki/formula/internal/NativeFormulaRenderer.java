@@ -38,7 +38,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.component.phase.Initializable;
-import org.xwiki.component.phase.InitializationException;
 import org.xwiki.environment.Environment;
 import org.xwiki.formula.AbstractFormulaRenderer;
 import org.xwiki.formula.FormulaRenderer;
@@ -82,7 +81,7 @@ public class NativeFormulaRenderer extends AbstractFormulaRenderer implements In
     private File tempDirectory;
 
     @Override
-    public void initialize() throws InitializationException
+    public void initialize()
     {
         this.tempDirectory = new File(this.environment.getTemporaryDirectory(), "formulae");
         this.tempDirectory.mkdir();
@@ -148,7 +147,7 @@ public class NativeFormulaRenderer extends AbstractFormulaRenderer implements In
      */
     private boolean executeCommand(String[] commandLine, File cwd) throws IOException
     {
-        List<String> commandList = new Vector<String>(commandLine.length);
+        List<String> commandList = new Vector<>(commandLine.length);
         Collections.addAll(commandList, commandLine);
 
         ProcessBuilder processBuilder = new ProcessBuilder(commandList);

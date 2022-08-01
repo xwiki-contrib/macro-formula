@@ -30,7 +30,6 @@ import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.component.phase.Initializable;
-import org.xwiki.component.phase.InitializationException;
 import org.xwiki.formula.AbstractFormulaRenderer;
 import org.xwiki.formula.FormulaRenderer;
 import org.xwiki.formula.ImageData;
@@ -61,7 +60,7 @@ public final class GoogleChartsFormulaRenderer extends AbstractFormulaRenderer i
     private final HttpClient client = new HttpClient();
 
     @Override
-    public void initialize() throws InitializationException
+    public void initialize()
     {
         this.client.getHttpConnectionManager().getParams().setConnectionTimeout(10000);
     }
