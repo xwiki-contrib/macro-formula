@@ -19,15 +19,24 @@
  */
 package org.xwiki.rendering.macro.formula;
 
+import java.util.Arrays;
+
+import javax.inject.Provider;
+
 import org.junit.jupiter.api.AfterEach;
-import org.xwiki.bridge.DocumentAccessBridge;
+import org.xwiki.component.util.DefaultParameterizedType;
 import org.xwiki.formula.FormulaRenderer;
 import org.xwiki.formula.ImageStorage;
-import org.xwiki.model.reference.AttachmentReference;
 import org.xwiki.model.reference.DocumentReference;
 import org.xwiki.rendering.test.integration.junit5.RenderingTests;
+import org.xwiki.resource.ResourceReferenceSerializer;
+import org.xwiki.resource.temporary.TemporaryResourceReference;
 import org.xwiki.test.annotation.AllComponents;
 import org.xwiki.test.mockito.MockitoComponentManager;
+import org.xwiki.url.ExtendedURL;
+
+import com.xpn.xwiki.XWikiContext;
+import com.xpn.xwiki.doc.XWikiDocument;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
@@ -44,41 +53,44 @@ import static org.mockito.Mockito.when;
 @AllComponents
 public class IntegrationTests implements RenderingTests
 {
-    private DocumentAccessBridge mockDocumentAccessBridge;
-
     private ImageStorage mockImageStorage;
 
     private FormulaMacroConfiguration mockConfiguration;
 
-    private AttachmentReference attachmentReference1;
-
-    private AttachmentReference attachmentReference2;
-
     @RenderingTests.Initialized
     public void initialize(MockitoComponentManager componentManager) throws Exception
     {
-        // Document Access Bridge Mock
-        mockDocumentAccessBridge = componentManager.registerMockComponent(DocumentAccessBridge.class);
+        // XWiki Context Mock
+        Provider<XWikiContext> mockXWikiContextProvider = componentManager.registerMockComponent(
+            new DefaultParameterizedType(null, Provider.class, XWikiContext.class));
+        XWikiContext xcontext = new XWikiContext();
+        DocumentReference documentReference = new DocumentReference("wiki", "space", "page");
+        XWikiDocument document = new XWikiDocument(documentReference);
+        xcontext.setDoc(document);
+        when(mockXWikiContextProvider.get()).thenReturn(xcontext);
+
+        // Temporary Resource Serializer Mock
+        ResourceReferenceSerializer<TemporaryResourceReference, ExtendedURL> mockResourceSerializer =
+            componentManager.registerMockComponent(new DefaultParameterizedType(null,
+                ResourceReferenceSerializer.class, TemporaryResourceReference.class,ExtendedURL.class), "standard/tmp");
+
+        TemporaryResourceReference temporaryResourceReference1 = new TemporaryResourceReference("formula",
+            "190ef2f68e7fbd75c869d74dea959b1a48faadefc7a0c9219e3e94d005821935", documentReference);
+        ExtendedURL extendedURL1 = new ExtendedURL(Arrays.asList(
+            "xwiki", "tmp", "formula", "190ef2f68e7fbd75c869d74dea959b1a48faadefc7a0c9219e3e94d005821935"));
+        when(mockResourceSerializer.serialize(temporaryResourceReference1)).thenReturn(extendedURL1);
+
+        TemporaryResourceReference temporaryResourceReference2 = new TemporaryResourceReference("formula",
+            "06fbba0acf130efd9e147fdfe91a943cc4f3e29972c6cd1d972e9aabf0900966", documentReference);
+        ExtendedURL extendedURL2 = new ExtendedURL(Arrays.asList(
+            "xwiki", "tmp", "formula", "06fbba0acf130efd9e147fdfe91a943cc4f3e29972c6cd1d972e9aabf0900966"));
+        when(mockResourceSerializer.serialize(temporaryResourceReference2)).thenReturn(extendedURL2);
 
         // Image Storage Mock
         mockImageStorage = componentManager.registerMockComponent(ImageStorage.class);
 
         // Configuration Mock
         mockConfiguration = componentManager.registerMockComponent(FormulaMacroConfiguration.class);
-
-        DocumentReference documentReference = new DocumentReference("wiki", "space", "page");
-        when(mockDocumentAccessBridge.getCurrentDocumentReference()).thenReturn(documentReference);
-
-        attachmentReference1 = new AttachmentReference(
-            "06fbba0acf130efd9e147fdfe91a943cc4f3e29972c6cd1d972e9aabf0900966", documentReference);
-        when(mockDocumentAccessBridge.getAttachmentURL(attachmentReference1, false)).thenReturn(
-            "/xwiki/bin/view/space/page/06fbba0acf130efd9e147fdfe91a943cc4f3e29972c6cd1d972e9aabf0900966");
-
-        attachmentReference2 = new AttachmentReference(
-            "190ef2f68e7fbd75c869d74dea959b1a48faadefc7a0c9219e3e94d005821935", documentReference);
-        when(mockDocumentAccessBridge.getAttachmentURL(attachmentReference2, false)).thenReturn(
-            "/xwiki/bin/view/space/page/190ef2f68e7fbd75c869d74dea959b1a48faadefc7a0c9219e3e94d005821935");
-
         when(mockConfiguration.getRenderer()).thenReturn("snuggletex");
         when(mockConfiguration.getDefaultType()).thenReturn(FormulaRenderer.Type.DEFAULT);
         when(mockConfiguration.getDefaultFontSize()).thenReturn(FormulaRenderer.FontSize.DEFAULT);
@@ -88,11 +100,8 @@ public class IntegrationTests implements RenderingTests
     @AfterEach
     public void after()
     {
-        verify(mockDocumentAccessBridge, times(1)).getCurrentDocumentReference();
-
         verify(mockConfiguration, times(1)).getRenderer();
         verify(mockConfiguration, times(1)).getDefaultType();
-
         verify(mockImageStorage, times(1)).get(any(String.class));
     }
 }

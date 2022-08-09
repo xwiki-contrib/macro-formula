@@ -28,13 +28,12 @@ import javax.inject.Singleton;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
-import org.xwiki.bridge.DocumentAccessBridge;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.component.manager.ComponentManager;
 import org.xwiki.formula.FormulaRenderer;
 import org.xwiki.formula.FormulaRenderer.FontSize;
 import org.xwiki.formula.FormulaRenderer.Type;
-import org.xwiki.model.reference.AttachmentReference;
+import org.xwiki.formula.internal.TemporaryResourceReferenceProvider;
 import org.xwiki.rendering.block.Block;
 import org.xwiki.rendering.block.ImageBlock;
 import org.xwiki.rendering.block.ParagraphBlock;
@@ -47,6 +46,9 @@ import org.xwiki.rendering.macro.descriptor.DefaultContentDescriptor;
 import org.xwiki.rendering.macro.formula.FormulaMacroConfiguration;
 import org.xwiki.rendering.macro.formula.FormulaMacroParameters;
 import org.xwiki.rendering.transformation.MacroTransformationContext;
+import org.xwiki.resource.ResourceReferenceSerializer;
+import org.xwiki.resource.temporary.TemporaryResourceReference;
+import org.xwiki.url.ExtendedURL;
 
 /**
  * Displays a formula, in LaTeX syntax, as an image.
@@ -71,6 +73,9 @@ public class FormulaMacro extends AbstractMacro<FormulaMacroParameters>
     /** The description of the macro content. */
     private static final String CONTENT_DESCRIPTION = "The mathematical formula, in LaTeX syntax";
 
+    @Inject
+    private Logger logger;
+
     /** Component manager, needed for retrieving the selected formula renderer. */
     @Inject
     private ComponentManager manager;
@@ -79,15 +84,12 @@ public class FormulaMacro extends AbstractMacro<FormulaMacroParameters>
     @Inject
     private FormulaMacroConfiguration configuration;
 
-    /** Needed for computing the URL for accessing the rendered image. */
     @Inject
-    private DocumentAccessBridge dab;
+    @Named("standard/tmp")
+    private ResourceReferenceSerializer<TemporaryResourceReference, ExtendedURL> temporaryResourceReferenceSerializer;
 
-    /**
-     * The logger to log.
-     */
     @Inject
-    private Logger logger;
+    private TemporaryResourceReferenceProvider resourceReferenceProvider;
 
     /**
      * Create and initialize the descriptor of the macro.
@@ -132,7 +134,7 @@ public class FormulaMacro extends AbstractMacro<FormulaMacroParameters>
         }
         // Block level formulae should be wrapped in a paragraph element
         if (!context.isInline()) {
-            result = new ParagraphBlock(Collections.<Block> singletonList(result));
+            result = new ParagraphBlock(Collections.singletonList(result));
         }
         return Collections.singletonList(result);
     }
@@ -155,29 +157,20 @@ public class FormulaMacro extends AbstractMacro<FormulaMacroParameters>
     {
         try {
             FormulaRenderer renderer = this.manager.getInstance(FormulaRenderer.class, rendererHint);
+            // Calling process() will generate the image and save it in a temporary location.
             String imageName = renderer.process(formula, inline, fontSize, imageType);
-            // TODO: HACK!!
-            // We're going through the getAttachmentURL() API so that when the PdfURLFactory is used, the generated
-            // image is saved and then embedded in the exported PDF thanks to PDFURIResolver. In the future we need
-            // to remove this hack by introduce a proper Resource for generated image (say TemporaryResource),
-            // implement a TemporaryResourceSerializer<URL> and introduce a ResourceLoader interface and have it
-            // implemented for TemporaryResource...
-            AttachmentReference attachmentReference =
-                new AttachmentReference(imageName, this.dab.getCurrentDocumentReference());
-            String url = this.dab.getAttachmentURL(attachmentReference, false);
-            // Note that we have to replace the download action by the tex action since the getAttachmentURL() API
-            // will use the "download" action but when the generated URL is called by the browser it needs to point to
-            // the TexAction...
-            url = url.replace("/download/", "/tex/");
-            // TODO: end HACK!!
-            ResourceReference imageReference = new ResourceReference(url, ResourceType.URL);
+            // Compute the URL pointing to the generated image
+            TemporaryResourceReference temporaryResourceReference =
+                this.resourceReferenceProvider.getImageReference(imageName);
+            ExtendedURL extendedURL = this.temporaryResourceReferenceSerializer.serialize(temporaryResourceReference);
+            ResourceReference imageReference = new ResourceReference(extendedURL.serialize(), ResourceType.URL);
             ImageBlock result = new ImageBlock(imageReference, false);
             // Set the alternative text for the image to be the original formula
             result.setParameter("alt", formula);
             return result;
         } catch (Exception e) {
             throw new MacroExecutionException(
-                String.format("Failed to render formula using the [%s] renderer", rendererHint), e);
+                String.format("Failed to render formula [%s] using the [%s] renderer", formula, rendererHint), e);
         }
     }
 

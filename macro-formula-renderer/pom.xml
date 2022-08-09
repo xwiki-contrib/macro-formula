@@ -39,7 +39,6 @@
     <xwiki.extension.features>org.xwiki.platform:xwiki-platform-formula-renderer</xwiki.extension.features>
   </properties>
   <dependencies>
-    <!-- Apache commons, helper libraries for keeping the code small -->
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
@@ -52,8 +51,6 @@
       <groupId>commons-httpclient</groupId>
       <artifactId>commons-httpclient</artifactId>
     </dependency>
-
-    <!-- Other XWiki modules -->
     <dependency>
       <groupId>org.xwiki.commons</groupId>
       <artifactId>xwiki-commons-cache-api</artifactId>
@@ -70,7 +67,6 @@
       <artifactId>xwiki-commons-environment-api</artifactId>
       <version>${commons.version}</version>
     </dependency>
-
     <!-- SnuggleTeX is a LaTeX to XHTML+MathML converter, which can be combined with JEuclid to transform equations into images -->
     <dependency>
       <groupId>de.rototor.snuggletex</groupId>
@@ -98,6 +94,22 @@
         <exclusion>
           <groupId>commons-logging</groupId>
           <artifactId>commons-logging</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.xwiki.platform</groupId>
+      <artifactId>xwiki-platform-resource-temporary</artifactId>
+      <version>${platform.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.xwiki.platform</groupId>
+      <artifactId>xwiki-platform-oldcore</artifactId>
+      <version>${platform.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.xwiki.platform</groupId>
+          <artifactId>xwiki-platform-formula-renderer</artifactId>
         </exclusion>
       </exclusions>
     </dependency>

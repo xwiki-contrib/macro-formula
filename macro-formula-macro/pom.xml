@@ -31,7 +31,7 @@
   <name>Macro Formula - Macro</name>
   <description>Inserts a mathematical formula</description>
   <properties>
-    <xwiki.jacoco.instructionRatio>0.55</xwiki.jacoco.instructionRatio>
+    <xwiki.jacoco.instructionRatio>0.53</xwiki.jacoco.instructionRatio>
     <!-- Name to display by the Extension Manager -->
     <xwiki.extension.name>Formula Macro</xwiki.extension.name>
     <!-- Category to display in the Extension Manager. -->
@@ -41,8 +41,13 @@
   </properties>
   <dependencies>
     <dependency>
+      <groupId>org.xwiki.contrib.formula</groupId>
+      <artifactId>macro-formula-renderer</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
       <groupId>org.xwiki.platform</groupId>
-      <artifactId>xwiki-platform-formula-renderer</artifactId>
+      <artifactId>xwiki-platform-resource-temporary</artifactId>
       <version>${platform.version}</version>
     </dependency>
     <dependency>
@@ -72,6 +77,11 @@
       <groupId>org.xwiki.rendering</groupId>
       <artifactId>xwiki-rendering-syntax-event</artifactId>
       <version>${rendering.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>

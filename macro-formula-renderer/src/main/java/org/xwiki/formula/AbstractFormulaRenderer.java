@@ -49,13 +49,13 @@ public abstract class AbstractFormulaRenderer implements FormulaRenderer
     public String process(String formula, boolean inline, FontSize size, Type type) throws IllegalArgumentException,
         IOException
     {
-        // Only render the image if it is not already in the cache
-        String cacheKey = computeImageID(formula, inline, size, type);
-        if (this.storage.get(cacheKey) == null) {
+        // Only render the image if it is not already in the store
+        String imageId = computeImageID(formula, inline, size, type);
+        if (this.storage.get(imageId) == null) {
             ImageData image = renderImage(formula, inline, size, type);
-            this.storage.put(cacheKey, image);
+            this.storage.put(imageId, image);
         }
-        return cacheKey;
+        return imageId;
     }
 
     @Override

@@ -196,8 +196,8 @@ public interface FormulaRenderer
     /**
      * Retrieve the image data from the storage.
      * 
-     * @param imageID the identifier for the image, returned by {@link #process(String, boolean, FontSize, Type)}
+     * @param imageId the identifier for the image, returned by {@link #process(String, boolean, FontSize, Type)}
      * @return the generated {@link ImageData}, or {@code null} if no image exists with this identifier
      */
-    ImageData getImage(String imageID);
+    ImageData getImage(String imageId);
 }
