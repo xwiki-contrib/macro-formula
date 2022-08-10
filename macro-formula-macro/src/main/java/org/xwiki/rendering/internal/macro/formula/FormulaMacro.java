@@ -85,8 +85,7 @@ public class FormulaMacro extends AbstractMacro<FormulaMacroParameters>
     private FormulaMacroConfiguration configuration;
 
     @Inject
-    @Named("standard/tmp")
-    private ResourceReferenceSerializer<TemporaryResourceReference, ExtendedURL> temporaryResourceReferenceSerializer;
+    private ResourceReferenceSerializer<org.xwiki.resource.ResourceReference, ExtendedURL> resourceReferenceSerializer;
 
     @Inject
     private TemporaryResourceReferenceProvider resourceReferenceProvider;
@@ -162,7 +161,7 @@ public class FormulaMacro extends AbstractMacro<FormulaMacroParameters>
             // Compute the URL pointing to the generated image
             TemporaryResourceReference temporaryResourceReference =
                 this.resourceReferenceProvider.getImageReference(imageName);
-            ExtendedURL extendedURL = this.temporaryResourceReferenceSerializer.serialize(temporaryResourceReference);
+            ExtendedURL extendedURL = this.resourceReferenceSerializer.serialize(temporaryResourceReference);
             ResourceReference imageReference = new ResourceReference(extendedURL.serialize(), ResourceType.URL);
             ImageBlock result = new ImageBlock(imageReference, false);
             // Set the alternative text for the image to be the original formula

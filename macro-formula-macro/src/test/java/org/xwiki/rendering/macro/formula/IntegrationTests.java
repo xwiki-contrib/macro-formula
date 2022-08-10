@@ -34,6 +34,7 @@ import org.xwiki.resource.temporary.TemporaryResourceReference;
 import org.xwiki.test.annotation.AllComponents;
 import org.xwiki.test.mockito.MockitoComponentManager;
 import org.xwiki.url.ExtendedURL;
+import org.xwiki.wiki.descriptor.WikiDescriptorManager;
 
 import com.xpn.xwiki.XWikiContext;
 import com.xpn.xwiki.doc.XWikiDocument;
@@ -72,7 +73,7 @@ public class IntegrationTests implements RenderingTests
         // Temporary Resource Serializer Mock
         ResourceReferenceSerializer<TemporaryResourceReference, ExtendedURL> mockResourceSerializer =
             componentManager.registerMockComponent(new DefaultParameterizedType(null,
-                ResourceReferenceSerializer.class, TemporaryResourceReference.class,ExtendedURL.class), "standard/tmp");
+                ResourceReferenceSerializer.class, TemporaryResourceReference.class,ExtendedURL.class));
 
         TemporaryResourceReference temporaryResourceReference1 = new TemporaryResourceReference("formula",
             "190ef2f68e7fbd75c869d74dea959b1a48faadefc7a0c9219e3e94d005821935", documentReference);
@@ -95,6 +96,11 @@ public class IntegrationTests implements RenderingTests
         when(mockConfiguration.getDefaultType()).thenReturn(FormulaRenderer.Type.DEFAULT);
         when(mockConfiguration.getDefaultFontSize()).thenReturn(FormulaRenderer.FontSize.DEFAULT);
         when(mockImageStorage.get(any(String.class))).thenReturn(null);
+
+        // Wiki Descriptor Manager (drawn by "default" ResourceReferenceSerializer)
+        WikiDescriptorManager wikiDescriptorManager =
+            componentManager.registerMockComponent(WikiDescriptorManager.class);
+        when(wikiDescriptorManager.getCurrentWikiId()).thenReturn("wiki");
     }
 
     @AfterEach
