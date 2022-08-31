@@ -23,7 +23,7 @@
   <parent>
     <groupId>org.xwiki.contrib.formula</groupId>
     <artifactId>macro-formula</artifactId>
-    <version>14.7</version>
+    <version>14.8-SNAPSHOT</version>
   </parent>
   <artifactId>macro-formula-renderer</artifactId>
   <name>Macro Formula - Renderer</name>
