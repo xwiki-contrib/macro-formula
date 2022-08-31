@@ -71,7 +71,7 @@ public class TemporaryResourceReferenceProvider
         // TODO: Fix this by changing the ImageStorage interface and passing an EntityReference. FTM we don't change
         // this in version 14.7 to not break backward compatibility and still offer the same ImageData and ImageStorage
         // classes for those using it when it was in platform (v <= 14.6).
-        // Note: This can not work if the context is not set up correctly prior to calling ImageStorage.
+        // Note: It's possible this won't work if the context is not set up correctly prior to calling ImageStorage.
         XWikiContext xcontext = this.xwikiContextProvider.get();
         DocumentReference currentDocumentReference = xcontext.getDoc().getDocumentReference();
         return new TemporaryResourceReference(MODULE_ID, String.format("%s%s", imageId, suffix),

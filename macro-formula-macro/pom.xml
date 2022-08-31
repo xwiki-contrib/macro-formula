@@ -85,9 +85,16 @@
       <version>${platform.version}</version>
       <scope>test</scope>
     </dependency>
+    <!-- Runtime dependency normally provided by the Servlet Container -->
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>javax.servlet-api</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <!-- Runtime dependency normally provided by the Servlet Container -->
+    <dependency>
+      <groupId>org.mortbay.jasper</groupId>
+      <artifactId>apache-el</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
