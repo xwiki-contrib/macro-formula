@@ -7,7 +7,7 @@ Inserts a mathematical formula (by generating an image on the server side).
 * [Issue Tracker](https://jira.xwiki.org/browse/FORMULA)
 * Communication: [Forum](<https://forum.xwiki.org/>), [Chat](https://dev.xwiki.org/xwiki/bin/view/Community/Chat)
 * [Development Practices](https://dev.xwiki.org)
-* Minimal XWiki version supported: XWiki 14.7
+* Minimal XWiki version supported: XWiki 14.10
 * License: LGPL 2.1
 * Translations: TBD
 * Sonar Dashboard: TBD

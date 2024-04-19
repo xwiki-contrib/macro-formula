@@ -25,10 +25,10 @@
   <parent>
     <groupId>org.xwiki.contrib.formula</groupId>
     <artifactId>macro-formula</artifactId>
-    <version>14.8-SNAPSHOT</version>
+    <version>14.8.1-SNAPSHOT</version>
   </parent>
   <artifactId>macro-formula-macro</artifactId>
-  <name>Macro Formula - Macro</name>
+  <name>Formula Macro - Macro</name>
   <description>Inserts a mathematical formula</description>
   <properties>
     <xwiki.jacoco.instructionRatio>0.53</xwiki.jacoco.instructionRatio>
@@ -40,6 +40,10 @@
     <xwiki.extension.components>org.xwiki.rendering.macro.Macro/formula</xwiki.extension.components>
     <!-- Old names of this module used for retro compatibility when resolving dependencies of old extensions -->
     <xwiki.extension.features>org.xwiki.platform:xwiki-platform-formula-macro</xwiki.extension.features>
+    <!-- TODO: Fix the following warning message and remove this skip:
+           Warning: the fonts "Times" and "Times" are not available for the Java logical font "Serif", which may have
+           unexpected appearance or behavior. Re-enable the "Times" font to remove this warning. -->
+    <xwiki.surefire.captureconsole.skip>true</xwiki.surefire.captureconsole.skip>
   </properties>
   <dependencies>
     <dependency>

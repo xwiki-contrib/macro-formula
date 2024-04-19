@@ -39,6 +39,7 @@ import org.xwiki.wiki.descriptor.WikiDescriptorManager;
 import com.xpn.xwiki.XWikiContext;
 import com.xpn.xwiki.doc.XWikiDocument;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -88,14 +89,14 @@ public class IntegrationTests implements RenderingTests
         when(mockResourceSerializer.serialize(temporaryResourceReference2)).thenReturn(extendedURL2);
 
         // Image Storage Mock
-        mockImageStorage = componentManager.registerMockComponent(ImageStorage.class);
+        this.mockImageStorage = componentManager.registerMockComponent(ImageStorage.class);
 
         // Configuration Mock
-        mockConfiguration = componentManager.registerMockComponent(FormulaMacroConfiguration.class);
-        when(mockConfiguration.getRenderer()).thenReturn("snuggletex");
-        when(mockConfiguration.getDefaultType()).thenReturn(FormulaRenderer.Type.DEFAULT);
-        when(mockConfiguration.getDefaultFontSize()).thenReturn(FormulaRenderer.FontSize.DEFAULT);
-        when(mockImageStorage.get(any(String.class))).thenReturn(null);
+        this.mockConfiguration = componentManager.registerMockComponent(FormulaMacroConfiguration.class);
+        when(this.mockConfiguration.getRenderer()).thenReturn("snuggletex");
+        when(this.mockConfiguration.getDefaultType()).thenReturn(FormulaRenderer.Type.DEFAULT);
+        when(this.mockConfiguration.getDefaultFontSize()).thenReturn(FormulaRenderer.FontSize.DEFAULT);
+        when(this.mockImageStorage.get(any(String.class))).thenReturn(null);
 
         // Wiki Descriptor Manager (drawn by "default" ResourceReferenceSerializer)
         WikiDescriptorManager wikiDescriptorManager =
@@ -106,8 +107,8 @@ public class IntegrationTests implements RenderingTests
     @AfterEach
     public void after()
     {
-        verify(mockConfiguration, times(1)).getRenderer();
-        verify(mockConfiguration, times(1)).getDefaultType();
-        verify(mockImageStorage, times(1)).get(any(String.class));
+        verify(this.mockConfiguration, times(1)).getRenderer();
+        verify(this.mockConfiguration, times(1)).getDefaultType();
+        verify(this.mockImageStorage, times(1)).get(any(String.class));
     }
 }

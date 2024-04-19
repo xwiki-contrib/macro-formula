@@ -1,0 +1,9 @@
+#if (!$latex.block.isInline())
+
+
+  \begin{equation}
+  ${latex.block.content}
+  \end{equation}##
+#else
+  $${latex.block.content}$##
+#end

@@ -23,10 +23,10 @@
   <parent>
     <groupId>org.xwiki.contrib.formula</groupId>
     <artifactId>macro-formula</artifactId>
-    <version>14.8-SNAPSHOT</version>
+    <version>14.8.1-SNAPSHOT</version>
   </parent>
   <artifactId>macro-formula-renderer</artifactId>
-  <name>Macro Formula - Renderer</name>
+  <name>Formula Macro - Renderer</name>
   <packaging>jar</packaging>
   <description>Render mathematical formulae into images</description>
   <properties>
