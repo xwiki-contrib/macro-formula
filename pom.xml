@@ -29,7 +29,7 @@
   </parent>
   <groupId>org.xwiki.contrib.formula</groupId>
   <artifactId>macro-formula</artifactId>
-  <version>14.8.1-SNAPSHOT</version>
+  <version>14.8-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>Formula Macro - Parent POM</name>
   <description>Support for mathematical formulae inside XWiki</description>
