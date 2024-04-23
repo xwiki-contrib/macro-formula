@@ -29,7 +29,7 @@
   </parent>
   <groupId>org.xwiki.contrib.formula</groupId>
   <artifactId>macro-formula</artifactId>
-  <version>14.8-SNAPSHOT</version>
+  <version>14.8</version>
   <packaging>pom</packaging>
   <name>Formula Macro - Parent POM</name>
   <description>Support for mathematical formulae inside XWiki</description>
@@ -42,7 +42,7 @@
     <connection>scm:git:git://github.com/xwiki-contrib/macro-formula.git</connection>
     <developerConnection>scm:git:git@github.com:xwiki-contrib/macro-formula.git</developerConnection>
     <url>https://github.com/xwiki-contrib/macro-formula/tree/master</url>
-    <tag>HEAD</tag>
+    <tag>macro-formula-14.8</tag>
   </scm>
   <developers>
     <developer>

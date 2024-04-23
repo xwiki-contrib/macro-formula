@@ -25,7 +25,7 @@
   <parent>
     <groupId>org.xwiki.contrib.formula</groupId>
     <artifactId>macro-formula</artifactId>
-    <version>14.8-SNAPSHOT</version>
+    <version>14.8</version>
   </parent>
   <artifactId>macro-formula-latex</artifactId>
   <name>Formula Macro - LaTeX Template</name>
