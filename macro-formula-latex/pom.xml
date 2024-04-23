@@ -31,7 +31,7 @@
   <name>Formula Macro - LaTeX Template</name>
   <description>Template for the Formula macro when exporting to LaTeX</description>
   <properties>
-    <latex.version>1.25-SNAPSHOT</latex.version>
+    <latex.version>1.25</latex.version>
     <!-- Extension Manager category -->
     <xwiki.extension.category>api</xwiki.extension.category>
     <xwiki.extension.name>Formula LaTeX Template</xwiki.extension.name>
