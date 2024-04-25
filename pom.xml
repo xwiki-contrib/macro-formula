@@ -44,16 +44,6 @@
     <url>https://github.com/xwiki-contrib/macro-formula/tree/master</url>
     <tag>HEAD</tag>
   </scm>
-  <developers>
-    <developer>
-      <id>xwikidev</id>
-      <name>XWiki Development Team</name>
-    </developer>
-    <developer>
-      <id>vmassol</id>
-      <name>Vincent Massol</name>
-    </developer>
-  </developers>
   <modules>
     <!-- Sorted Alphabetically -->
     <module>macro-formula-latex</module>

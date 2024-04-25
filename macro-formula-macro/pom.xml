@@ -30,6 +30,16 @@
   <artifactId>macro-formula-macro</artifactId>
   <name>Formula Macro - Macro</name>
   <description>Inserts a mathematical formula</description>
+  <developers>
+    <developer>
+      <id>xwikidev</id>
+      <name>XWiki Development Team</name>
+    </developer>
+    <developer>
+      <id>vmassol</id>
+      <name>Vincent Massol</name>
+    </developer>
+  </developers>
   <properties>
     <xwiki.jacoco.instructionRatio>0.53</xwiki.jacoco.instructionRatio>
     <!-- Name to display by the Extension Manager -->
