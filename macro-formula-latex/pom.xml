@@ -30,12 +30,6 @@
   <artifactId>macro-formula-latex</artifactId>
   <name>Formula Macro - LaTeX Template</name>
   <description>Template for the Formula macro when exporting to LaTeX</description>
-  <developers>
-    <developer>
-      <id>vmassol</id>
-      <name>Vincent Massol</name>
-    </developer>
-  </developers>
   <properties>
     <latex.version>1.25</latex.version>
     <!-- Extension Manager category -->
