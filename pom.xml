@@ -44,6 +44,7 @@
     <url>https://github.com/xwiki-contrib/macro-formula/tree/master</url>
     <tag>HEAD</tag>
   </scm>
+  <!-- List of all developers who have ever contribute to this project -->
   <developers>
     <developer>
       <id>xwikidev</id>
