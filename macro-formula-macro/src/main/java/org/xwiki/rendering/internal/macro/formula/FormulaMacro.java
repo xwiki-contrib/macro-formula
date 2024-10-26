@@ -167,6 +167,7 @@ public class FormulaMacro extends AbstractMacro<FormulaMacroParameters>
             ImageBlock result = new ImageBlock(imageReference, false);
             // Set the alternative text for the image to be the original formula
             result.setParameter("alt", formula);
+            result.setParameter("class", inline ? "formula-inline" : "formula-block");
             return result;
         } catch (Exception e) {
             throw new MacroExecutionException(
