@@ -33,7 +33,6 @@
   <packaging>pom</packaging>
   <name>Formula Macro - Parent POM</name>
   <description>Support for mathematical formulae inside XWiki</description>
-  <url>https://extensions.xwiki.org/xwiki/bin/view/Extension/Formula%20Macro</url>
   <properties>
     <xwiki.release.jira.skip>false</xwiki.release.jira.skip>
     <xwiki.issueManagement.jira.id>FORMULA</xwiki.issueManagement.jira.id>
