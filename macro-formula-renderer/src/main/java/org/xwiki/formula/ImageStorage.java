@@ -38,6 +38,14 @@ public interface ImageStorage
     ImageData get(String id);
 
     /**
+     * Return the local path to the formula image.
+     *
+     * @param id ID of the image
+     * @return the absolute path to the formula image
+     */
+    String getLocalPath(String id);
+
+    /**
      * Store the image under the given identifier.
      * 
      * @param id the identifier of the data in the storage

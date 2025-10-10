@@ -200,4 +200,12 @@ public interface FormulaRenderer
      * @return the generated {@link ImageData}, or {@code null} if no image exists with this identifier
      */
     ImageData getImage(String imageId);
+
+    /**
+     * Return the local path to the formula image.
+     *
+     * @param imageID ID of the image
+     * @return the absolute path to the formula image
+     */
+    String getImageLocalPath(String imageID);
 }

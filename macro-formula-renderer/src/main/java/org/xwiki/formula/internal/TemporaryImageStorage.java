@@ -85,6 +85,21 @@ public class TemporaryImageStorage implements ImageStorage
     }
 
     @Override
+    public String getLocalPath(String id)
+    {
+        if (StringUtils.isEmpty(id)) {
+            return null;
+        }
+
+        // Load the image
+        File file = loadFile(this.resourceReferenceProvider.getImageReference(id));
+        if (file != null) {
+            return file.getAbsolutePath();
+        }
+        return null;
+    }
+
+    @Override
     public void put(String id, ImageData data)
     {
         if (StringUtils.isEmpty(id)) {

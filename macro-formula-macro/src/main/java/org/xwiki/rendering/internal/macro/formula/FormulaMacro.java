@@ -25,6 +25,7 @@ import java.util.Set;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.inject.Provider;
 import javax.inject.Singleton;
 
 import org.apache.commons.lang3.StringUtils;
@@ -50,6 +51,9 @@ import org.xwiki.rendering.transformation.MacroTransformationContext;
 import org.xwiki.resource.ResourceReferenceSerializer;
 import org.xwiki.resource.temporary.TemporaryResourceReference;
 import org.xwiki.url.ExtendedURL;
+
+import com.xpn.xwiki.XWikiContext;
+import com.xpn.xwiki.internal.export.OfficeExporterURLFactory;
 
 /**
  * Displays a formula, in LaTeX syntax, as an image.
@@ -90,6 +94,9 @@ public class FormulaMacro extends AbstractMacro<FormulaMacroParameters>
 
     @Inject
     private TemporaryResourceReferenceProvider resourceReferenceProvider;
+
+    @Inject
+    private Provider<XWikiContext> xcontextProvider;
 
     /**
      * Create and initialize the descriptor of the macro.
@@ -156,6 +163,8 @@ public class FormulaMacro extends AbstractMacro<FormulaMacroParameters>
         throws MacroExecutionException, IllegalArgumentException
     {
         try {
+            XWikiContext xcontext = xcontextProvider.get();
+
             FormulaRenderer renderer = this.manager.getInstance(FormulaRenderer.class, rendererHint);
             // Calling process() will generate the image and save it in a temporary location.
             String imageName = renderer.process(formula, inline, fontSize, imageType);
@@ -163,7 +172,13 @@ public class FormulaMacro extends AbstractMacro<FormulaMacroParameters>
             TemporaryResourceReference temporaryResourceReference =
                 this.resourceReferenceProvider.getImageReference(imageName);
             ExtendedURL extendedURL = this.resourceReferenceSerializer.serialize(temporaryResourceReference);
-            ResourceReference imageReference = new ResourceReference(extendedURL.serialize(), ResourceType.URL);
+            ResourceReference imageReference;
+            if (xcontext.getURLFactory().getClass().equals(OfficeExporterURLFactory.class)) {
+                String url = renderer.getImageLocalPath(imageName);
+                imageReference = new ResourceReference(url, ResourceType.URL);
+            } else {
+                imageReference = new ResourceReference(extendedURL.serialize(), ResourceType.URL);
+            }
             ImageBlock result = new ImageBlock(imageReference, false);
             // Set the alternative text for the image to be the original formula
             result.setParameter("alt", formula);

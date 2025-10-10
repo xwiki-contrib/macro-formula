@@ -64,6 +64,12 @@ public abstract class AbstractFormulaRenderer implements FormulaRenderer
         return this.storage.get(imageID);
     }
 
+    @Override
+    public String getImageLocalPath(String imageID)
+    {
+        return this.storage.getLocalPath(imageID);
+    }
+
     /**
      * Renders a mathematical formula into an image.
      * 

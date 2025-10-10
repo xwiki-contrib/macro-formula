@@ -77,6 +77,30 @@
             </dependency>
           </dependencies>
         </plugin>
+        <plugin>
+          <groupId>org.revapi</groupId>
+          <artifactId>revapi-maven-plugin</artifactId>
+          <configuration>
+            <analysisConfiguration combine.children="append">
+              <revapi.differences>
+                <differences>
+                  <item>
+                    <ignore>true</ignore>
+                    <code>java.method.addedToInterface</code>
+                    <new>method java.lang.String org.xwiki.formula.FormulaRenderer::getImageLocalPath(java.lang.String)</new>
+                    <justification>Added new method in order to handle export to ODT.</justification>
+                  </item>
+                  <item>
+                    <ignore>true</ignore>
+                    <code>java.method.addedToInterface</code>
+                    <new>method java.lang.String org.xwiki.formula.ImageStorage::getLocalPath(java.lang.String)</new>
+                    <justification>Added new method in order to handle export to ODT.</justification>
+                  </item>
+                </differences>
+              </revapi.differences>
+            </analysisConfiguration>
+          </configuration>
+        </plugin>
       </plugins>
     </pluginManagement>
   </build>

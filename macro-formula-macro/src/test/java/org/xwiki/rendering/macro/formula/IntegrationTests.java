@@ -38,9 +38,11 @@ import org.xwiki.wiki.descriptor.WikiDescriptorManager;
 
 import com.xpn.xwiki.XWikiContext;
 import com.xpn.xwiki.doc.XWikiDocument;
+import com.xpn.xwiki.web.XWikiURLFactory;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -59,6 +61,8 @@ public class IntegrationTests implements RenderingTests
 
     private FormulaMacroConfiguration mockConfiguration;
 
+    private XWikiURLFactory urlFactory;
+
     @RenderingTests.Initialized
     public void initialize(MockitoComponentManager componentManager) throws Exception
     {
@@ -69,6 +73,8 @@ public class IntegrationTests implements RenderingTests
         DocumentReference documentReference = new DocumentReference("wiki", "space", "page");
         XWikiDocument document = new XWikiDocument(documentReference);
         xcontext.setDoc(document);
+        this.urlFactory = mock(XWikiURLFactory.class);
+        xcontext.setURLFactory(urlFactory);
         when(mockXWikiContextProvider.get()).thenReturn(xcontext);
 
         // Temporary Resource Serializer Mock
